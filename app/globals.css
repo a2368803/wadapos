@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────── 全域基礎 ───────── */
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* ───────── 觸控友善按鈕 ───────── */
+button, [role="button"] {
+  min-height: 44px;
+  cursor: pointer;
+}
+
+/* ───────── 列印：58mm 熱感紙 ───────── */
+@media print {
+  @page {
+    size: 58mm auto;
+    margin: 2mm 2mm;
+  }
+
+  html, body {
+    width: 54mm;
+    font-size: 11pt;
+    font-family: 'Courier New', Courier, monospace;
+    color: #000;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  /* 分隔線 */
+  .print-divider {
+    border-top: 1px dashed #000;
+    margin: 3pt 0;
+  }
+}
+
+/* ───────── 列印：A4 備援版面 ───────── */
+@media print and (min-width: 100mm) {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+  html, body {
+    width: auto;
+    font-size: 12pt;
+  }
+}
+
+/* ───────── 螢幕上隱藏列印專用元素 ───────── */
+.print-only {
+  display: none;
+}
+
+/* ───────── 訂單狀態動畫 ───────── */
+@keyframes pulse-border {
+  0%, 100% { border-color: #fbbf24; }
+  50%       { border-color: #f59e0b; }
+}
+
+.order-pending {
+  animation: pulse-border 2s ease-in-out infinite;
+}

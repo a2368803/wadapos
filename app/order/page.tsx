@@ -1,6 +1,8 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+export const dynamic = 'force-dynamic'
+
+import { useEffect, useState, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import { formatPrice, generateIdempotencyKey } from '@/lib/utils'
@@ -87,7 +89,7 @@ function ItemCard({
 }
 
 // ─── 主頁面 ───────────────────────────────────────────────────
-export default function OrderPage() {
+function OrderPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -205,7 +207,7 @@ export default function OrderPage() {
     }
   }
 
-  const activeItems = items.filter(i => i.category_id === activeCategory)
+  const activeItems = items.filter((i) => i.category_id === activeCategory)
 
   if (loadError) {
     return (
@@ -376,5 +378,13 @@ export default function OrderPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function OrderPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><p className="text-gray-500">載入中…</p></div>}>
+      <OrderPageContent />
+    </Suspense>
   )
 }
